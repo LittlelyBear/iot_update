@@ -196,6 +196,7 @@ int main()
 	char register_id[50] = {0};
 	char product_secret[50] = {0};
 	char product_key[50] = {0};
+	char product_url[100] = {0};
 	char hardware_version[10] = {0};
 	
 	//if(!access("/data/sunniwell/config", F_OK))
@@ -223,6 +224,13 @@ int main()
 	printf("register_id = %s\n", register_id);	
 	property_get("ro.swiot.product.secret", product_secret, "0");
 	printf("product_secret = %s\n", product_secret);
+	property_get("ro.swiot.product.key", product_key, "0");	
+	printf("product_key = %s\n", product_key);
+	property_get("ro.swiot.product.url", product_url, "0");
+        printf("product_url = %s\n", product_url);
+
+
+
 
 	property_get("ro.build.hardware.version", hardware_version, "0");
 	printf("hardware_version = %s\n", hardware_version);
@@ -238,8 +246,8 @@ int main()
 	}
 	
 //N7N8DesO
-    SWIOT_SDK_Construct("N7N8DesO", cur_sn, cur_mac ,cur_version, hardware_version, manufacturer);
-	SWIOT_SDK_AutomMode_Open("http://120.24.69.144:8980/open-api/device/auth/register",register_id, product_secret);
+    SWIOT_SDK_Construct(product_key, cur_sn, cur_mac ,cur_version, hardware_version, manufacturer);
+	SWIOT_SDK_AutomMode_Open(product_url,register_id, product_secret);
     SWIOT_SDK_Register(REG_TYPE_DEVICE,&handle);
     SWIOT_SDK_Register(REG_TYPE_CACHE,&cache);
     SWIOT_SDK_Register(REG_TYPE_EVENT,SDK_Device_Event);
